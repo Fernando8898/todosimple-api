@@ -7,14 +7,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 
 
 @Entity
@@ -45,19 +50,20 @@ public class User {
     @Size(groups = {CreateUser.class,UpdateUser.class}, min = 8, max = 60)
     private String password;
 
-    //private List<Task> tasks = mew ArrayList<Task>();
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<Task>();
 
-    public User(){
-        
+
+    public User() {
     }
-        
+    
 
     public User(long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
-    
+
 
     public long getId() {
         return this.id;
@@ -82,6 +88,31 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+
+    public User id(long id) {
+        setId(id);
+        return this;
+    }
+
+    public User username(String username) {
+        setUsername(username);
+        return this;
+    }
+
+    public User password(String password) {
+        setPassword(password);
+        return this;
+    }
+
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -99,5 +130,9 @@ public class User {
         return Objects.hash(id, username, password);
     }
 
+    
+    
+    
+    
     
 }
