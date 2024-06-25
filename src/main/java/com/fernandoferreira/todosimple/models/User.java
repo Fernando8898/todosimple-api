@@ -130,6 +130,11 @@ public class User {
         return Objects.hash(id, username, password);
     }
 
+
+    public void setId(Object object) {    
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
+
     
     
     
