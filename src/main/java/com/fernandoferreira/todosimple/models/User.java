@@ -35,7 +35,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private long id;
+    private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
     @NotNull(groups = CreateUser.class)
@@ -58,19 +58,19 @@ public class User {
     }
     
 
-    public User(long id, String username, String password) {
+    public User(Long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
 
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(Long obj) {
+        this.id = obj;
     }
 
     public String getUsername() {
@@ -88,22 +88,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 
-    public User id(long id) {
-        setId(id);
-        return this;
-    }
-
-    public User username(String username) {
-        setUsername(username);
-        return this;
-    }
-
-    public User password(String password) {
-        setPassword(password);
-        return this;
-    }
 
     public List<Task> getTasks() {
         return this.tasks;
@@ -113,31 +98,40 @@ public class User {
         this.tasks = tasks;
     }
 
-
+    
+    
     @Override
-    public boolean equals(Object o) {
-        if (o == this)
+    public boolean equals(Object obj) {
+        if (obj == this)
             return true;
-        if (!(o instanceof User)) {
+        if (obj == null) 
             return false;
-        }
-        User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password);
-    }
+        if (!(obj instanceof User)) 
+            return false;
+        User other = (User) obj;
+        if (this.id == null) 
+            if (other.id != null)
+                return false;
+            else if(!this.id.equals(other.id))
+                return false;
+        return Objects.equals(this.id, other.id) && Objects.equals(this.username, other.username) 
+                && Objects.equals(this.password, other.password);
+                
+        
+        
+        }    
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+        return result;
     }
 
 
-    public void setId(Object object) {    
-        throw new UnsupportedOperationException("Unimplemented method 'setId'");
-    }
+   
 
     
-    
-    
-    
-    
+
 }
