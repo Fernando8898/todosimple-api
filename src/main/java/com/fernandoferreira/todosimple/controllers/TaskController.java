@@ -30,7 +30,6 @@ public class TaskController {
     
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id){
-
         Task obj = this.taskService.findById(id);
         return ResponseEntity.ok(obj);
 
@@ -46,7 +45,7 @@ public class TaskController {
     public ResponseEntity<Void> create(@Valid @RequestBody Task obj){
         this.taskService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-        .path("/{id}").buildAndExpand(obj.getId()).toUri();
+         .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
 
     }
